@@ -6,7 +6,7 @@ width=info.current_w
 height=info.current_h
 screen=pygame.display.set_mode((width,height), pygame.RESIZABLE)
 pygame.display.set_caption("Idle Incremental")
-font=pygame.font.Font("Games/Idle Incremental/BalsamiqSans-Bold.ttf",30)
+font=pygame.font.Font("Idle Incremental/BalsamiqSans-Bold.ttf",30)
 red=(255,0,0)
 orange=(255,128,0)
 yellow=(255,155,0)
