@@ -1,7 +1,7 @@
 import pygame,numpy,os
 from pygame.locals import * #type:ignore
 from sys import exit
-os.system("pip install pygame-ce")
+os.system("pip install pygame-ce numpy")
 pygame.init()
 info=pygame.display.Info()
 width=info.current_w
@@ -19,11 +19,11 @@ blue=(0,0,255)
 purple=(255,0,128)
 pink=(255,0,255)
 white=(255,255,255)
-buy=pygame.mixer.Sound("Idle Incremental/Activate.mp3")
+buy=pygame.mixer.Sound("Idle Incremental/Resources/Activate.mp3")
 click=False
 def text(size,text,color,x,y):
     global font
-    font=pygame.font.Font("Idle Incremental/BalsamiqSans-Bold.ttf",size)
+    font=pygame.font.Font("Idle Incremental/Resources/BalsamiqSans-Bold.ttf",size)
     img=font.render(text,True,color)
     screen.blit(img,(x,y))
 def drawrectandtext():
