@@ -1,7 +1,10 @@
-import pygame,numpy,os
+try:
+    import pygame,numpy
+except:
+    print(f"Error: Can't startup because there're no modules this game.")
+    print(f"Try to install using \"pip install <module> <module2> ...\".")
 from pygame.locals import * #type:ignore
 from sys import exit
-os.system("pip install pygame-ce numpy")
 pygame.init()
 info=pygame.display.Info()
 width=info.current_w
@@ -21,7 +24,7 @@ purple=(255,0,128)
 pink=(255,0,255)
 white=(255,255,255)
 score=0
-price=15
+price=10
 perclick=1
 buy=pygame.mixer.Sound("D:/Idle Incremental/Resources/Activate.mp3")
 click=False
@@ -44,19 +47,40 @@ def rectcollidemouse():
     if event.type==pygame.MOUSEBUTTONDOWN and not click:
         click=True
         while event.type==pygame.MOUSEBUTTONUP:
-            if block.collidepoint(pos) and event.type!=pygame.MOUSEBUTTONDOWN:
-                click=True
-            if button.collidepoint(pos) and event.type!=pygame.MOUSEBUTTONDOWN:
-                click=True
-    if event.type==pygame.MOUSEBUTTONUP and click:
+            buttonclick(block)
+            buttonclick(button)
+    elif event.type==pygame.MOUSEBUTTONUP and click:
         click=False
         if block.collidepoint(pos):
-            buy.play()
-            score-=price
-            price*=1.1
-            perclick+=1
-        if button.collidepoint(pos):
+            if score>=int(price):
+                buy.play()
+                score-=int(price)
+                price*=1.1
+                perclick+=1
+        elif button.collidepoint(pos):
             score+=perclick
+def notclick():
+    global click
+    click=False
+    return
+def buttonclick(button):
+    global click
+    if (not button.collidepoint(pos)) and event.type==pygame.MOUSEBUTTONDOWN and click:
+        while (button.collidepoint(pos) and event.type==pygame.MOUSEBUTTONUP) or event.type==pygame.MOUSEBUTTONUP:
+            if button.collidepoint(pos) and event.type==pygame.MOUSEBUTTONUP and click:
+                notclick()
+        notclick()
+    elif button.collidepoint(pos) and event.type==pygame.MOUSEBUTTONDOWN and click:
+        while not button.collidepoint(pos) and event.type==pygame.MOUSEBUTTONUP and click:
+            notclick()
+        if not button.collidepoint(pos):
+            while not click and button.collidepoint(pos):
+                notclick()
+        elif not button.collidepoint(pos) and click:
+            while event.type==pygame.MOUSEBUTTONUP:
+                notclick()
+            notclick()
+        notclick()
 def draw():
     screen.fill("#272528")
     drawrectandtext()
