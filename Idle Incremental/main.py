@@ -26,7 +26,8 @@ white="#FFFFFF"
 score=0
 price=10
 perclick=1
-buy=pygame.mixer.Sound("D:/Idle Incremental/Resources/Activate.mp3")
+clicksfx=pygame.mixer.Sound("D:/Idle Incremental/Resources/Sounds/Click.mp3")
+buysfx=pygame.mixer.Sound("D:/Idle Incremental/Resources/Sounds/Activate.mp3")
 click=False
 def text(size,text,color,x,y):
     global font
@@ -53,11 +54,12 @@ def rectcollidemouse():
         click=False
         if block.collidepoint(pos):
             if score>=int(price):
-                buy.play()
+                buysfx.play()
                 score-=int(price)
                 price*=1.1
                 perclick+=1
         elif button.collidepoint(pos):
+            clicksfx.play()
             score+=perclick
 def notclick():
     global click
